@@ -1,18 +1,23 @@
-apiVersion: extensions/v1beta1
-kind: Ingress
 metadata:
   name: flask-ingress
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-  - http:
-      paths:
-      - path: /configs
-        backend:
-          serviceName: flask-svc
-          servicePort: 8080
-      - path: /search
-        backend:
-          serviceName: flask-svc
-          servicePort: 8080
+    - host:
+      http:
+        paths:
+          - path: /configs
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-svc
+                port:
+                  number: 8080
+          - path: /search
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-svc
+                port:
+                  number: 8080
